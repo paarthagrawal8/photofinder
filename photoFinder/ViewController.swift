@@ -7,22 +7,24 @@
 
 import UIKit
 
-struct apiresponse: Codable {
-    let total: Int
-    let total_pages : Int
+struct APIResponse: Codable {
+    let total: Int?
+    let total_pages : Int?
     let results:[Result]
 }
 
 struct Result : Codable{
-    let id : String
+    let id : String?
     let urls : URLS
     }
-struct URLS: Codable {
-    let full: String
-    
+
+struct URLS: Codable{
+    let regular: String?
 }
+
+
 class ViewController: UIViewController {
-    let urlstring  = "https://api.unsplash.com/search/collections?page=50&query=office&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
+    let urlstring  = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=office&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
     
     
     override func viewDidLoad() {
@@ -38,14 +40,15 @@ class ViewController: UIViewController {
             return
             }
         do {
-            let jsonresults = try JSONDecoder().decode(apiresponse.self, from: data)
+            let jsonresults = try JSONDecoder().decode(APIResponse.self, from: data)
             print(jsonresults.results.count)
             }
 
         catch {
         print(error)
             }
-        };task.resume()
+        }
+        task.resume()
     }
 }
     
@@ -54,7 +57,4 @@ class ViewController: UIViewController {
 
         
     
-    
-
-
-
+  
