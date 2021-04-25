@@ -23,16 +23,20 @@ struct URLS: Codable{
 }
 
 
-class ViewController: UIViewController , UICollectionViewDataSource{
+class ViewController: UIViewController , UICollectionViewDataSource , UISearchBarDelegate{
     
-    let urlstring  = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=office&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
+    
     
     private var collectionview : UICollectionView?
     
     var results : [Result] = []
     
+    let searchbar = UISearchBar()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchbar.delegate = self
+        view.addSubview(searchbar)
         let layout  = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 0
@@ -44,14 +48,27 @@ class ViewController: UIViewController , UICollectionViewDataSource{
         collectionview.dataSource = self
         view.addSubview(collectionview)
         self.collectionview = collectionview
-        fetchphotos()
+    
         }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchbar.resignFirstResponder()
+        if let text = searchbar.text {
+            results = []
+            collectionview?.frame = view.bounds
+            fetchphotos(query: text)
+            
+        }
+    }
         
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionview?.frame = view.bounds
+        searchbar.frame = CGRect(x: 10, y: view.safeAreaInsets.top, width: view.frame.size.width-20, height: 50)
+        collectionview?.frame = CGRect(x: 0, y: view.safeAreaInsets.top+55, width: view.frame.size.width, height: view.frame.size.height-55)
     }
-    func fetchphotos() {
+    func fetchphotos(query : String) {
+        let urlstring  = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=\(query)&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
+        
         guard let url = URL(string: urlstring) else {
             return
             }
