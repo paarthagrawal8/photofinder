@@ -39,7 +39,8 @@ class ViewController: UIViewController , UICollectionViewDataSource{
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(width: view.frame.size.width/2, height: view.frame.size.width/2)
         let collectionview = UICollectionView(frame: .zero , collectionViewLayout : layout)
-        collectionview.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        
+        collectionview.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionview.dataSource = self
         view.addSubview(collectionview)
         self.collectionview = collectionview
@@ -80,7 +81,7 @@ class ViewController: UIViewController , UICollectionViewDataSource{
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else{
             return UICollectionViewCell()
         }
-        cell.backgroundColor = .blue
+        cell.configure(with: imageurlstring)
         return cell
     }
     

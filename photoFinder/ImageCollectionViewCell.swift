@@ -9,45 +9,41 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     static let identifier = "ImageCollectionViewCell"
-    
-    private let imageView : UICollectionView = {
-        imageView.ClipToBounds = true
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    override init (frame:CGReact){
+    override init (frame : CGRect){
         super.init(frame: frame)
         contentView.addSubview(imageView)
     }
-    required init?(code : NSCoder) {
-        fatalError()
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    override func layoutSubviews(){
+    override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = contentView.bounds
         
     }
-    override func preapreForReuse(){
-        super.preapreForReuse()
+    override func prepareForReuse() {
+        super.prepareForReuse()
         imageView.image = nil
     }
-    func configure(with urlString : string)  {
-        
-        guard let url = URL(string : urlString) else {
+    func configure(with urlstring : String){
+        guard let url = URL(string: urlstring ) else {
             return
         }
-        let task = URLSession.shared.dataTask(with : url) {(data , _ , error in
-         guard let data = data , error , error == nil else
+        let task = URLSession.shared.dataTask(with: url) {[weak self]data , _ , error in  guard let data = data , error == nil else {
             return
-                )
-            DispatchQueue.main.assync{
-                let image = UIImage(data: data)
-                self?.imageView.image = image
+            }
+        DispatchQueue.main.async {
+            let image = UIImage(data: data )
+            self?.imageView.image = image
             }
         }
         task.resume()
-        
     }
-    
 }
