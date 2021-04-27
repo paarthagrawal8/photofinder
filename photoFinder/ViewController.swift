@@ -39,9 +39,9 @@ class ViewController: UIViewController , UICollectionViewDataSource , UISearchBa
         view.addSubview(searchbar)
         let layout  = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 0.50
         layout.minimumInteritemSpacing = 0
-        layout.itemSize = CGSize(width: view.frame.size.width/2, height: view.frame.size.width/2)
+        layout.itemSize = CGSize(width: 250, height: 250)
         let collectionview = UICollectionView(frame: .zero , collectionViewLayout : layout)
         
         collectionview.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
@@ -103,7 +103,7 @@ class ViewController: UIViewController , UICollectionViewDataSource , UISearchBa
     }
     
 }
-    
+
         // Do any additional setup after loading the view.
     
 
