@@ -23,20 +23,20 @@ struct URLS: Codable{
 }
 
 
-class ViewController: UIViewController { //UICollectionViewDataSource , UISearchBarDelegate{
+class ViewController: UIViewController , UICollectionViewDataSource , UISearchBarDelegate {
+    
+    
     
    // @IBOutlet weak var collectionView: UICollectionView!
     
 //    @IBOutlet weak var info: UILabel!
     
-//    private var collectionview : UICollectionView?
+     private var collectionview : UICollectionView?
     
-   // var results : [Result] = []
+    var results : [Result] = []
 //
-//    let searchbar = UISearchBar()
+    let searchbar = UISearchBar()
 //
-     let urlstring = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=office&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchbar.delegate = self
@@ -47,15 +47,14 @@ class ViewController: UIViewController { //UICollectionViewDataSource , UISearch
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(width: view.frame.size.width/2, height: view.frame.size.width/2)
         let collectionview = UICollectionView(frame: .zero , collectionViewLayout : layout)
-        
         collectionview.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionview.dataSource = self
         view.addSubview(collectionview)
         self.collectionview = collectionview
         fetchphotosOnFrontPage()
-    
-        }
-    
+            
+    }
+        
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchbar.resignFirstResponder()
@@ -64,7 +63,7 @@ class ViewController: UIViewController { //UICollectionViewDataSource , UISearch
         if let text = searchbar.text {
             results = []
             collectionview?.frame = view.bounds
-            let trimcharch = text.replacingOccurrences(of: " ", with: "")
+            let trimcharch = text.replacingOccurrences(of: " " , with: "")
             fetchphotos(query: trimcharch)
             
         }
@@ -82,10 +81,6 @@ class ViewController: UIViewController { //UICollectionViewDataSource , UISearch
     func fetchphotos(query : String) {
         let urlstring  = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=\(query)&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
 
-        
-            
-//            "https://api.unsplash.com/search/photos?page=1&per_page=50&query=\(query)&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
-
         guard let url = URL(string: urlstring) else {
             return
             }
@@ -94,11 +89,10 @@ class ViewController: UIViewController { //UICollectionViewDataSource , UISearch
             }
         do {
             let jsonresult = try JSONDecoder().decode(APIResponse.self , from: data)
-            print(jsonresult.results.count)
-//             DispatchQueue.main.async {
-//                self?.results = jsonresult.results
-//               // self?.collectionview?.reloadData()
-//                }
+             DispatchQueue.main.async {
+                self.results = jsonresult.results
+                self.collectionview?.reloadData()
+                }
             }
 
         catch {
@@ -110,8 +104,6 @@ class ViewController: UIViewController { //UICollectionViewDataSource , UISearch
     
     func fetchphotosOnFrontPage() {
         let urlstring  = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=login&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
-        
-        
         
         guard let url = URL(string: urlstring) else {
             return
@@ -138,7 +130,16 @@ class ViewController: UIViewController { //UICollectionViewDataSource , UISearch
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return results.count
     }
-
-        
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let imageurlstring = results[indexPath.row].urls.regular
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else
+                {
+                    return UICollectionViewCell()
+                }
+                cell.configure(with: imageurlstring)
+                return cell
+            }
+    }
+
   
