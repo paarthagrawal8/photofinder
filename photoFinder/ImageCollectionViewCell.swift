@@ -1,9 +1,15 @@
+////
+////  ImageCollectionViewCell.swift
+////  photoFinder
+////
+////  Created by Paarth Agrawal on 25/04/21.
+////
 //
+
 //  ImageCollectionViewCell.swift
 //  photoFinder
 //
 //  Created by Paarth Agrawal on 25/04/21.
-//
 
 import UIKit
 
@@ -55,5 +61,5 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
         task.resume()
     }
-//}
 }
+
