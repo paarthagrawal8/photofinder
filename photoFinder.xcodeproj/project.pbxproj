@@ -16,7 +16,6 @@
 		71AEFF21262DA19300EFC9D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71AEFF1F262DA19300EFC9D0 /* LaunchScreen.storyboard */; };
 		71AEFF2C262DA19400EFC9D0 /* photoFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AEFF2B262DA19400EFC9D0 /* photoFinderTests.swift */; };
 		71AEFF37262DA19400EFC9D0 /* photoFinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AEFF36262DA19400EFC9D0 /* photoFinderUITests.swift */; };
-		71FA18C32637E54A00946303 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA18C22637E54A00946303 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +51,6 @@
 		71AEFF32262DA19400EFC9D0 /* photoFinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = photoFinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		71AEFF36262DA19400EFC9D0 /* photoFinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoFinderUITests.swift; sourceTree = "<group>"; };
 		71AEFF38262DA19400EFC9D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		71FA18C22637E54A00946303 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +106,6 @@
 				71AEFF18262DA18E00EFC9D0 /* ViewController.swift */,
 				711134A626354535005EC42F /* ImageCollectionViewCell.swift */,
 				71AEFF1A262DA18E00EFC9D0 /* Main.storyboard */,
-				71FA18C22637E54A00946303 /* CollectionViewCell.swift */,
 				71AEFF1D262DA19300EFC9D0 /* Assets.xcassets */,
 				71AEFF1F262DA19300EFC9D0 /* LaunchScreen.storyboard */,
 				71AEFF22262DA19300EFC9D0 /* Info.plist */,
@@ -264,7 +261,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71FA18C32637E54A00946303 /* CollectionViewCell.swift in Sources */,
 				71AEFF19262DA18E00EFC9D0 /* ViewController.swift in Sources */,
 				71AEFF15262DA18E00EFC9D0 /* AppDelegate.swift in Sources */,
 				711134A726354535005EC42F /* ImageCollectionViewCell.swift in Sources */,

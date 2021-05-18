@@ -8,8 +8,8 @@
 import UIKit
 
 struct APIResponse: Codable {
-    let total: Int
-    let total_pages : Int
+//    let total: Int
+//    let total_pages : Int
     let results:[Result]
 }
 
@@ -35,6 +35,9 @@ class ViewController: UIViewController , UICollectionViewDataSource , UISearchBa
     
     var results : [Result] = []
 //
+    private var images : [String : Data] = [:]
+   
+    
     let searchbar = UISearchBar()
 //
     override func viewDidLoad() {
@@ -43,15 +46,15 @@ class ViewController: UIViewController , UICollectionViewDataSource , UISearchBa
         view.addSubview(searchbar)
         let layout  = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 1
-        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 1
         layout.itemSize = CGSize(width: view.frame.size.width/2, height: view.frame.size.width/2)
         let collectionview = UICollectionView(frame: .zero , collectionViewLayout : layout)
         collectionview.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionview.dataSource = self
         view.addSubview(collectionview)
         self.collectionview = collectionview
-        fetchphotosOnFrontPage()
+        fetchphotos(query: "login")
             
     }
         
@@ -78,7 +81,7 @@ class ViewController: UIViewController , UICollectionViewDataSource , UISearchBa
     }
     
     
-    func fetchphotos(query : String) {
+    func fetchphotos(query : String ) {
         let urlstring  = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=\(query)&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
 
         guard let url = URL(string: urlstring) else {
@@ -89,7 +92,7 @@ class ViewController: UIViewController , UICollectionViewDataSource , UISearchBa
             }
         do {
             let jsonresult = try JSONDecoder().decode(APIResponse.self , from: data)
-             DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(2)) {
                 self.results = jsonresult.results
                 self.collectionview?.reloadData()
                 }
@@ -102,29 +105,6 @@ class ViewController: UIViewController , UICollectionViewDataSource , UISearchBa
         task.resume()
     }
     
-    func fetchphotosOnFrontPage() {
-        let urlstring  = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=login&client_id=-m__cHmERkdS79ipLOHoaKESobSwI9GD2MVwnwWqs6o"
-        
-        guard let url = URL(string: urlstring) else {
-            return
-            }
-        let task = URLSession.shared.dataTask(with: url) {[weak self]data , _ , error in  guard let data = data , error == nil else {
-            return
-            }
-        do {
-            let jsonresult = try JSONDecoder().decode(APIResponse.self , from: data)
-            DispatchQueue.main.async {
-                self?.results = jsonresult.results
-                self?.collectionview?.reloadData()
-                }
-            }
-
-        catch {
-        print(error)
-            }
-        }
-        task.resume()
-    }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
